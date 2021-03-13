@@ -1,2 +1,3 @@
-Link to the specifications file:
-https://docs.google.com/document/d/18E8Vh3cux4ueAy6iDrqdxZvptGGZKFaGpGip4zJ1nsY/edit?usp=sharing
+To find out more about the project, check out the <a href='https://github.com/TetianaHrunyk/VocabularyLearningApp/blob/main/Docs/Specification.pdf'>specifications</a>.
+
+The blueprint of the project is available <a href='https://github.com/TetianaHrunyk/VocabularyLearningApp/blob/main/Docs/wireframe.pdf'>here</a>
