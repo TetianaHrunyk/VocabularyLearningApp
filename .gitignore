@@ -1,0 +1,26 @@
+databaseCredentials.txt
+./WeeklyReports/weeklyReportTemplate.md
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+./vocs/node_modules
+./vocs/.pnp
+./vocs/.pnp.js
+
+# testing
+./vocs/coverage
+
+# production
+./vocs/build
+
+# misc
+./vocs/.DS_Store
+./vocs/.env.local
+./vocs/.env.development.local
+./vocs/.env.test.local
+./vocs/.env.production.local
+
+./vocs/npm-debug.log*
+./vocs/yarn-debug.log*
+./vocs/yarn-error.log*
