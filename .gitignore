@@ -4,23 +4,23 @@ databaseCredentials.txt
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-./vocs/node_modules
-./vocs/.pnp
-./vocs/.pnp.js
+node_modules/
+.pnp
+.pnp.js
 
 # testing
-./vocs/coverage
+coverage
 
 # production
-./vocs/build
+build
 
 # misc
-./vocs/.DS_Store
-./vocs/.env.local
-./vocs/.env.development.local
-./vocs/.env.test.local
-./vocs/.env.production.local
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-./vocs/npm-debug.log*
-./vocs/yarn-debug.log*
-./vocs/yarn-error.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
