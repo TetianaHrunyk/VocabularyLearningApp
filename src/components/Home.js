@@ -1,20 +1,29 @@
 import Form from "react-bootstrap/Form"
-import {Col} from "react-bootstrap"
+import {Col, Row, Container, Button} from "react-bootstrap"
 
 const  Home = () => {
     return (
         <div className="home">
-            <h2>Homepage</h2>
-            <Form>
-                <Form.Row>
+            <h2>Homepage</h2><br />
+            <Container>
+                <Row>
                     <Col>
-                        <Form.Control placeholder="Input text" />
+                        <h3>Input Text</h3>
                     </Col>
                     <Col>
-                        <Form.Control placeholder="Translation" />
+                        <h3>Translation</h3>
                     </Col>
-                </Form.Row>
-            </Form>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Control as="textarea" placeholder="Input text" />
+                        <Button type="submit">Translate</Button>
+                    </Col>
+                    <Col as="article">
+                        <p>Translation</p>
+                    </Col>
+                </Row>
+            </Container>
         </div> 
     );
 }
