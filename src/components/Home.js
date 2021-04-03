@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Col, Row, Container } from "react-bootstrap"
 import Left from "./Left"
 import Right from "./Right"
+import UserContext from "../contexts/UserContext"
 
 const Home = () => {
+    //Destructure context
+    const { user } = useContext(UserContext)
+
     const [parsed, setParse] = useState(false);
     const [text, setText] = useState("");
     const [queue, setQueue] = useState([])
@@ -26,7 +30,7 @@ const Home = () => {
 
     const handleAdd = (e => {
         add.includes(e.target.value) ?
-            setAdd(add.concat.filter(item => item !== e.target.value)) :
+            setAdd(add.filter(item => item !== e.target.value)) :
             setAdd(add => [...add, e.target.value])
          
     })

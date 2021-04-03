@@ -1,7 +1,11 @@
+import { useContext } from "react"
 import { Link } from 'react-router-dom'
+import UserContext from "../contexts/UserContext.js"
 
 const Navbar = ({isLoggedIn, handleLogOut}) => {
-    if (isLoggedIn) {
+    const { user } = useContext(UserContext)
+
+    if (user) {
         return (  
             <nav className="navbar">
                 <h1>Vocs</h1>

@@ -1,5 +1,6 @@
 import Card from "react-bootstrap/Card"
 import CardDeck from 'react-bootstrap/CardDeck'
+import UserContext from "../contexts/UserContext"
 
 const Right = ({parsed, queue, handleAdd, add }) => {
 
@@ -7,15 +8,15 @@ const Right = ({parsed, queue, handleAdd, add }) => {
     return (
       queue.map(elem => {
         return (
-          <Card>
-            <Card.Body>
+          <Card style={{ minWidth: "60%"}}>
+            <Card.Body >
               <Card.Title>
                 {elem}
               </Card.Title>
               <Card.Text>
                 Translation for {elem}
               </Card.Text>
-              <button value = {elem} onClick = {handleAdd}>Add</button>
+              <button value = {elem} onClick = {handleAdd}>{ add.includes(elem)? "Drop" : "Add"}</button>
             </Card.Body>
           </Card>
         )
@@ -37,19 +38,18 @@ const Right = ({parsed, queue, handleAdd, add }) => {
       </Card>
     );
   } else {
+    console.log(add)
     return (
       <Card>
         <Card.Body>
           <Card.Title>
             Translations
           </Card.Title>
-          <Card.Text>
+          <Card.Text as="div" style={{overflow: "auto", maxHeight: "300px"}}>
             <CardDeck>
               {mapQueue(queue)}
             </CardDeck>
-            <br/>
-            {add}
-          </Card.Text>
+          </Card.Text>  
         </Card.Body>
       </Card>
     )

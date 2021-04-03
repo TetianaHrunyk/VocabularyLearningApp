@@ -1,5 +1,7 @@
 import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
+import UserContext from "../contexts/UserContext"
+
 
 const Left = ({ text, parsed, handleParse, handleText , queue, handleWordClick}) => {
 
