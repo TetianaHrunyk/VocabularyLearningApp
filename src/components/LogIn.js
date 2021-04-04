@@ -2,15 +2,23 @@ import {useState} from "react";
 import {useHistory} from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 
-const LogIn = ({isLoggedIn, handleLogIn}) => {
+const LogIn = ({handleLogIn}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory()
 
+    function validatePassword(pass) {
+        return true;
+    }
+    
     const handleSubmit = (e) => {
-        e.preventDefault()
-        handleLogIn()
-        history.push('/')
+        if (validatePassword(password)){
+            e.preventDefault()
+            handleLogIn(username)
+            history.push('/')
+        } else {
+            console.log("wrong password")
+        }
     }
 
     return ( 

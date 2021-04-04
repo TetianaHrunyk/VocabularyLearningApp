@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext.js"
 
-const Navbar = ({isLoggedIn, handleLogOut}) => {
+const Navbar = ({handleLogOut}) => {
     const { user } = useContext(UserContext)
 
     if (user) {
@@ -10,11 +10,11 @@ const Navbar = ({isLoggedIn, handleLogOut}) => {
             <nav className="navbar">
                 <h1>Vocs</h1>
                 <div className="links">
-                    <Link to='/'>Decks</Link>
-                    <Link to='/'>Cards</Link>
-                    <Link to='/'>Study</Link>
+                    <Link to='/decks'>Decks</Link>
+                    <Link to='/cards'>Cards</Link>
+                    <Link to='/study'>Study</Link>
                     <Link to='/'>Home</Link>
-                    <button onClick={handleLogOut}>Log Out</button>
+                    <Link to='/' onClick={handleLogOut}>Log Out</Link>
                 </div>
             </nav>
         ); 

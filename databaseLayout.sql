@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS decks (
+  id serial unique not null,
   userId int references users on delete cascade,
   deckName VARCHAR(80) not null,
   created timestamp,
@@ -19,6 +20,7 @@ CREATE TABLE IF NOT EXISTS decks (
 
 CREATE TABLE IF NOT EXISTS flashcards (
   id serial,
+  deckId serial,
   userId int,
   deckName VARCHAR(80),
   front VARCHAR(300) not null,
@@ -29,7 +31,8 @@ CREATE TABLE IF NOT EXISTS flashcards (
   nat_for float,
   for_nat float,
   PRIMARY KEY (id, userId),
-  foreign key (userId, deckName) references decks(userId, deckName)
+  foreign key (userId, deckName) references decks(userId, deckName),
+  foreign key (deckId) references decks(deckId),
   on delete cascade on update cascade
 );
 

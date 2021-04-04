@@ -3,7 +3,8 @@ import Form from "react-bootstrap/Form"
 import UserContext from "../contexts/UserContext"
 
 
-const Left = ({ text, parsed, handleParse, handleText , queue, handleWordClick}) => {
+const Left = (props) => {
+  const { text, parsed, handleParse, handleText , queue, handleWordClick, back, handleBack} = props
 
   function parseText(text) {
     return (
@@ -46,6 +47,7 @@ const Left = ({ text, parsed, handleParse, handleText , queue, handleWordClick})
           <Card.Text>
             <br />
           </Card.Text>
+          <button onClick={handleBack}>Back</button>
         </Card.Body>
       </Card>
     )

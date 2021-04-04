@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { useState, useMemo, useEffect } from "react"
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Navbar from './components/Navbbar'
 import Home from './components/Home'
 import Footer from './components/Footer'
@@ -7,6 +7,9 @@ import LogIn from "./components/LogIn"
 import SignUp from "./components/SignUp"
 import NotFound from "./components/NotFound"
 import UserContext from "./contexts/UserContext"
+import Decks from "./components/Decks"
+import Cards from "./components/Cards"
+import Study from "./components/Study"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -18,25 +21,40 @@ function App() {
     setUser(null);
   }
   
-  const handleLogIn = () => {
-    setUser('SomeUser');
+  const handleLogIn = (username) => {
+    setUser(username);
   }
+
+  useEffect( () => {
+    window.addEventListener("onbeforeunload", (e) => {
+      console.log("prevent")
+    }) 
+  })
 
   return (
     <Router>
       <div className="App">
         <UserContext.Provider value={curUser}>
-          <Navbar isLoggedIn={user} handleLogOut={handleLogOut} />
+          <Navbar handleLogOut={handleLogOut} />
           <div className="content">
             <Switch>
-              <Route exact path="/">
+              <Route exact path="/" >
                 <Home />
               </Route>
-              <Route path="/login">
-                <LogIn isLoggedIn={user} handleLogIn={handleLogIn} />
+              <Route exact path="/login">
+                <LogIn handleLogIn={handleLogIn} />
               </Route>
-              <Route path="/signup">
+              <Route exact path="/signup">
                 <SignUp />
+              </Route>
+              <Route exact path="/decks">
+                <Decks />
+              </Route>
+              <Route exact path="/cards">
+                <Cards />
+              </Route>
+              <Route exact path="/study">
+                <Study />
               </Route>
               <Route path='*'>
                 <NotFound />
