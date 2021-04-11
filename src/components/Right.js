@@ -8,17 +8,19 @@ const Right = ({parsed, queue, handleAdd, add }) => {
 
   function mapQueue(queue) {
     return (
-      queue.map(elem => {
+      Object.keys(queue)
+      .filter( word => word !== " ")
+      .map((word) => {
         return (
           <Card style={{ minWidth: "60%"}}>
             <Card.Body >
               <Card.Title>
-                {elem}
+                {word}
               </Card.Title>
               <Card.Text>
-                Translation for {elem}
+                {queue[word]}
               </Card.Text>
-              {user ? <button value = {elem} onClick = {handleAdd}> {add.includes(elem)? "Drop" : "Add" }</button> : <br/>}
+              {user ? <button value = {word} onClick = {handleAdd}> {word in add ? "Drop" : "Add" }</button> : <br/>}
               
             </Card.Body>
           </Card>
@@ -41,7 +43,6 @@ const Right = ({parsed, queue, handleAdd, add }) => {
       </Card>
     );
   } else {
-    console.log(add)
     return (
       <Card>
         <Card.Body>
@@ -57,7 +58,6 @@ const Right = ({parsed, queue, handleAdd, add }) => {
       </Card>
     )
   }
-
 }
 
 export default Right;

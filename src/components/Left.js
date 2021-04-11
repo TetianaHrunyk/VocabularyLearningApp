@@ -8,7 +8,9 @@ const Left = (props) => {
 
   function parseText(text) {
     return (
-      text.split(" ").map((elem) => {
+      text.split(" ")
+      .filter( elem => elem !== " ")
+      .map(elem => {
         return (
             <button value = {elem} onClick={handleWordClick}>
               {elem}

@@ -14,7 +14,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [user, setUser] = useState(false);
-
   const curUser = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   const handleLogOut = () => {
