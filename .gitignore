@@ -28,3 +28,8 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 package.json
+package1.json
+webpack.config.js
+babel.config.json
+
+/frontend/static/frontend/main.js
