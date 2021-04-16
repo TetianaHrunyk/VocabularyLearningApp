@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import current_user, UserList
+from .views import current_user, UserList, UserDecksListView, PostCreateView
+
 
 urlpatterns = [
     path('current_user/', current_user),

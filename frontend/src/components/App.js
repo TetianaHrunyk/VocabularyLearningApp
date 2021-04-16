@@ -52,8 +52,8 @@ function App() {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.token);
-        setLoggedIn(true)
         setUsername(json.user.username)
+        setLoggedIn(true)
         history.push('/')
       })
       .catch( e => {
@@ -78,13 +78,12 @@ function App() {
         }
         setLoggedIn(true)
         setUsername(json.username)
-        history.push('/')
+        history.push('/login')
       })
       .catch( e => {
-        console.log("Sign Up Error")
-        console.log(e)
         setError(e.message);
       })
+      
   };
 
   return (

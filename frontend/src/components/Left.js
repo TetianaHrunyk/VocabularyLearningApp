@@ -13,7 +13,7 @@ const Left = (props) => {
       .filter( elem => elem !== " ")
       .map(elem => {
         return (
-            <button value = {elem} onClick={handleWordClick}>
+            <button value = {elem} onClick={handleWordClick} key={elem}>
               {elem}
             </button>
         )

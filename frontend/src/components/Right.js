@@ -12,7 +12,7 @@ const Right = ({parsed, queue, handleAdd, add }) => {
       .filter( word => word !== " ")
       .map((word) => {
         return (
-          <Card style={{ minWidth: "60%"}}>
+          <Card style={{ minWidth: "60%"}} key={word}>
             <Card.Body >
               <Card.Title>
                 {word}
