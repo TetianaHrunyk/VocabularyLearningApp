@@ -37,7 +37,7 @@ const Right = ({parsed, queue, handleAdd, add }) => {
             Translations
           </Card.Title>
           <Card.Text>
-            Nothing here yet
+            You don't have any translations yet
           </Card.Text>
         </Card.Body>
       </Card>

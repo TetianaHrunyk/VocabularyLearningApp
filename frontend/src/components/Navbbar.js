@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext.js"
 
 const Navbar = ({handleLogOut}) => {
-    const { user } = useContext(UserContext)
+    const { username: user } = useContext(UserContext)
 
     if (user) {
         return (  

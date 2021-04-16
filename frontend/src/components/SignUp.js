@@ -1,16 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import {useHistory} from "react-router-dom"
 import Button from 'react-bootstrap/Button'
+import Alert from "react-bootstrap/Alert"
 
-const SignUp = ({handleSubmit}) => {
+const SignUp = ({handleSignUp, error, setError}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [cpassword, setCpassword] = useState('');
+    const history = useHistory()
+
+    useEffect(() => {
+        if (cpassword && cpassword !== password) {
+            setError("Passwords don't match")
+        } 
+        if (cpassword === password){
+            setError("")
+        }
+    }, [cpassword, password, setError]);
+
 
     return ( 
         <div className="form">
+            {error !== '' ?
+                <Alert variant="danger"> { error } </Alert> 
+             : ''   
+            }
             <h2>Create an Account</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={ e => handleSignUp (e, {username, email, password, cpassword}, history)}>
             <label>Username:</label>
                 <input 
                     type="text" 

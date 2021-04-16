@@ -11,24 +11,81 @@ import Decks from "./Decks"
 import Cards from "./Cards"
 import Study from "./Study"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import django_host from './paths'
 
 function App() {
-  const [user, setUser] = useState(false);
-  const curUser = useMemo(() => ({ user, setUser }), [user, setUser]);
-
-  const handleLogOut = () => {
-    setUser(null);
-  }
-  
-  const handleLogIn = (username) => {
-    setUser(username);
-  }
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') ? true : false);
+  const [username, setUsername] = useState('');
+  const curUser = useMemo(() => ({ username, setUsername }), [username, setUsername]);
+  const [error, setError] = useState('');
 
   useEffect( () => {
-    window.addEventListener("onbeforeunload", (e) => {
-      console.log("prevent")
-    }) 
-  })
+    if (loggedIn) {
+      fetch(django_host+'api/current_user/', {
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('token')}`
+          }
+      })
+        .then(res => res.json())
+        .then(json => {
+          setUsername(json.username);
+        });
+    }
+  }, [loggedIn])
+  
+  const handleLogOut = () => {
+    localStorage.removeItem('token');
+    setUsername('');
+    setLoggedIn(false);
+  }
+  
+  const handleLogIn = (e, data, history) => {
+    setError('')
+    e.preventDefault();
+    fetch(django_host+'token-auth/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        setLoggedIn(true)
+        setUsername(json.user.username)
+        history.push('/')
+      })
+      .catch( e => {
+        console.log("Log in Error")
+        console.log(e)
+        setError("Invalid Creadentials")
+      })
+  }
+
+  const handleSignUp = (e, data, history) => {
+    e.preventDefault();
+    setError('')
+    fetch(django_host+'api/users/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(json => {
+        localStorage.setItem('token', json.token);
+        setLoggedIn(true)
+        setUsername(json.username)
+        history.push('/')
+      })
+      .catch( e => {
+        console.log("Sign Up Error")
+        console.log(e)
+        setError("Unable to register user with these creadentials")
+      })
+  };
 
   return (
     <Router>
@@ -41,10 +98,10 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/login">
-                <LogIn handleLogIn={handleLogIn} />
+                <LogIn handleLogIn={handleLogIn} error={error} setError={setError}/>
               </Route>
               <Route exact path="/signup">
-                <SignUp />
+                <SignUp handleSignUp={handleSignUp} error={error} setError={setError}/>
               </Route>
               <Route exact path="/decks">
                 <Decks />

@@ -1,30 +1,22 @@
-import {useState} from "react";
+import {useState, useEffect } from "react";
 import {useHistory} from "react-router-dom"
+import Alert from "react-bootstrap/Alert"
 import Button from 'react-bootstrap/Button'
 
-const LogIn = ({handleLogIn}) => {
+const LogIn = ({handleLogIn, error, setError}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory()
 
-    function validatePassword(pass) {
-        return true;
-    }
-    
-    const handleSubmit = (e) => {
-        if (validatePassword(password)){
-            e.preventDefault()
-            handleLogIn(username)
-            history.push('/')
-        } else {
-            console.log("wrong password")
-        }
-    }
 
     return ( 
         <div className="form">
+            {error !== '' ?
+                <Alert variant="danger"> { error } </Alert> 
+             : ''   
+            }
             <h2>Log in</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={ e => handleLogIn(e, {username, password}, history) }>
                 <label>Username:</label>
                 <input 
                     type="text" 

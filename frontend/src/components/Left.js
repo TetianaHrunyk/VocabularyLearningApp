@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form"
 import UserContext from "../contexts/UserContext"
 
 
+
 const Left = (props) => {
   const { text, parsed, handleParse, handleText , queue, handleWordClick, back, handleBack} = props
 
