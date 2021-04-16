@@ -18,10 +18,6 @@ const Home = () => {
     const [queue, setQueue] = useState({})
     const [add, setAdd] = useState({});
     const [back, setBack] = useState(false);
-   // const [word, setWord] = useState(" ");
-    
-   // const {data: newQueue} = useTranslate(word, )
-
 
     useEffect( () => {
         window.addEventListener("popstate", e => {
@@ -51,7 +47,29 @@ const Home = () => {
             const { [e.target.value]: tmp, ...rest } = queue;
             setQueue(rest)
         } else {
-            setQueue({ ...queue, [e.target.value]: "Loading..."})
+            const source='en'
+            const target='sk'
+            fetch("https://deep-translate1.p.rapidapi.com/language/translate/v2", {
+                "method": "POST",
+                "headers": {
+                  "content-type": "application/json",
+                  "x-rapidapi-key": "c07e2c5e08mshd3c51cf8cbe266dp1236c9jsn787baf24bd93",
+                  "x-rapidapi-host": "deep-translate1.p.rapidapi.com"
+                },
+                "body": JSON.stringify({
+                  "q": e.target.value,
+                  "source": source,
+                  "target": target
+                })
+              })
+              .then(res => res.json())
+              .then(data => {
+                setQueue({ ...queue, [e.target.value]: data.data.translations.translatedText})
+              })
+              .catch(err => {
+                setQueue({ ...queue, [e.target.value]: "Falied to translate"})
+                console.log(err.message)
+              })
         }
         
     })

@@ -57,9 +57,7 @@ function App() {
         history.push('/')
       })
       .catch( e => {
-        console.log("Log in Error")
-        console.log(e)
-        setError("Invalid Creadentials")
+        setError(e.message)
       })
   }
 
@@ -75,7 +73,9 @@ function App() {
     })
       .then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.token);
+        if (json.username[0] === 'A user with that username already exists.'){
+          throw new Error("A user with that username already exists")
+        }
         setLoggedIn(true)
         setUsername(json.username)
         history.push('/')
@@ -83,7 +83,7 @@ function App() {
       .catch( e => {
         console.log("Sign Up Error")
         console.log(e)
-        setError("Unable to register user with these creadentials")
+        setError(e.message);
       })
   };
 
