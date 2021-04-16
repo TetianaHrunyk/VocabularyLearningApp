@@ -47,6 +47,7 @@ const Home = () => {
             const { [e.target.value]: tmp, ...rest } = queue;
             setQueue(rest)
         } else {
+            /*
             const source='en'
             const target='sk'
             fetch("https://deep-translate1.p.rapidapi.com/language/translate/v2", {
@@ -70,6 +71,8 @@ const Home = () => {
                 setQueue({ ...queue, [e.target.value]: "Falied to translate"})
                 console.log(err.message)
               })
+            */
+              setQueue({ ...queue, [e.target.value]: "Translation when saving api resources"})
         }
         
     })
