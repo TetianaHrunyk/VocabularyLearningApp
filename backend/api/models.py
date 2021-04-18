@@ -7,6 +7,9 @@ class Decks(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
   deckName = models.CharField(default="Custom Deck", max_length=50)
   created = models.DateField(auto_now_add=True)
+  def __str__(self):
+      return self.deckName + " by " + str(self.user)
+  
 
 class Cards(models.Model):
   deck = models.ForeignKey(Decks, on_delete=models.CASCADE, default=1)

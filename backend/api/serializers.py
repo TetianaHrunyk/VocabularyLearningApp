@@ -7,7 +7,7 @@ from rest_framework_jwt.settings import api_settings
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username', 'id')
 
 class UserSerializerWithToken(serializers.ModelSerializer):
 
@@ -34,14 +34,16 @@ class UserSerializerWithToken(serializers.ModelSerializer):
         model = User
         fields = ('token', 'username', 'password')
 
+    
 class DecksSerializer(serializers.ModelSerializer):
   class Meta:
     model = Decks
-    fields = ('deckId', 'userId', 'deckName', 'created')
+    fields = ('user', 'deckName', 'created', 'id')
+
 
 class CardsSerializer(serializers.ModelSerializer):
   class Meta:
     model = Cards
-    fields = ('id', 'deckId', 'userId', 'front', 'back',
-              'context', 'added', 'revised', 'nat_for', 'for_nat')
+    fields = '__all__'
+
               

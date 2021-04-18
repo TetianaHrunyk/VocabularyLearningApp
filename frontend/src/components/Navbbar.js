@@ -1,9 +1,14 @@
 import { useContext } from "react"
 import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext.js"
+//import django_host from './paths'
 
-const Navbar = ({handleLogOut}) => {
+const Navbar = ({handleLogOut, logInTime}) => {
     const { username: user } = useContext(UserContext)
+
+    if ((Date.now()-logInTime)/3600 > 22){
+        //time to refresh token
+    }
 
     if (user) {
         return (  

@@ -18,6 +18,7 @@ function App() {
   const [username, setUsername] = useState('');
   const curUser = useMemo(() => ({ username, setUsername }), [username, setUsername]);
   const [error, setError] = useState('');
+  const [logInTime, setLogInTime] = useState(null);
 
   useEffect( () => {
     if (loggedIn) {
@@ -28,7 +29,7 @@ function App() {
       })
         .then(res => res.json())
         .then(json => {
-          setUsername(json.username);
+          setUsername(json.id);
         });
     }
   }, [loggedIn])
@@ -37,6 +38,7 @@ function App() {
     localStorage.removeItem('token');
     setUsername('');
     setLoggedIn(false);
+    setLogInTime(null)
   }
   
   const handleLogIn = (e, data, history) => {
@@ -52,7 +54,8 @@ function App() {
       .then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.token);
-        setUsername(json.user.username)
+        setLogInTime(Date.now())
+        setUsername(json.user.id)
         setLoggedIn(true)
         history.push('/')
       })
@@ -77,7 +80,7 @@ function App() {
           throw new Error("A user with that username already exists")
         }
         setLoggedIn(true)
-        setUsername(json.username)
+        setUsername(json.id)
         history.push('/login')
       })
       .catch( e => {
@@ -90,7 +93,7 @@ function App() {
     <Router>
       <div className="App">
         <UserContext.Provider value={curUser}>
-          <Navbar handleLogOut={handleLogOut} />
+          <Navbar handleLogOut={handleLogOut} logInTime ={logInTime} />
           <div className="content">
             <Switch>
               <Route exact path="/" >
