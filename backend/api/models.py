@@ -16,9 +16,11 @@ class Cards(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
   front = models.CharField(max_length=50, null=False, unique=True)
   back = models.CharField(max_length=50, null=False)
-  context = models.CharField(max_length=500)
-  added = models.DateTimeField( auto_now_add=False)
-  revised = models.TimeField(auto_now_add=True)
+  context = models.CharField(max_length=500, default='')
+  added = models.DateTimeField( auto_now_add=True)
+  revised = models.DateTimeField(auto_now_add=True)
   nat_for = models.FloatField(default=0.1, null=False)
   for_nat = models.FloatField(default=0.1, null=False)
+  def __str__(self):
+      return self.front + " in " + str(self.deck) 
 

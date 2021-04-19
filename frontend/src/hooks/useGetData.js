@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetch = (url, method, authentication, deleted, created) => {
+const useFetch = (url, method, authentication, deleted, created, deck) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +41,7 @@ const useFetch = (url, method, authentication, deleted, created) => {
 
     // abort the fetch
     return () => abortCont.abort();
-  }, [url, method, authentication, deleted, created])
+  }, [url, method, authentication, deleted, created, deck])
 
   return { data, isPending, error };
 }

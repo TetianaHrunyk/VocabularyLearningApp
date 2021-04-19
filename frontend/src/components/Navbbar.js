@@ -16,7 +16,7 @@ const Navbar = ({handleLogOut, logInTime}) => {
                 <h1>Vocs</h1>
                 <div className="links">
                     <Link to='/decks'>Decks</Link>
-                    <Link to='/cards'>Cards</Link>
+                    <Link to='/cards/'>Cards</Link>
                     <Link to='/study'>Study</Link>
                     <Link to='/'>Home</Link>
                     <Link to='/' onClick={handleLogOut}>Log Out</Link>

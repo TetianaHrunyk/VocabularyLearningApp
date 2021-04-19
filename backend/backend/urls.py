@@ -22,6 +22,7 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'decks', views.DecksView, 'decks')
+router.register(r'cards', views.CardsView, 'cards')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

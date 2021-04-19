@@ -20,7 +20,7 @@ const Right = ({parsed, queue, handleAdd, add }) => {
               <Card.Text>
                 {queue[word]}
               </Card.Text>
-              {user ? <button value = {word} onClick = {handleAdd}> {word in add ? "Drop" : "Add" }</button> : <br/>}
+              {localStorage.getItem("token") ? <button value = {word} onClick = {handleAdd}> {word in add ? "Drop" : "Add" }</button> : <br/>}
               
             </Card.Body>
           </Card>

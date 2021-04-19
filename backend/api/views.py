@@ -44,6 +44,15 @@ class DecksView(viewsets.ModelViewSet):
         queryset = Decks.objects.filter(user=request.user.id)
         serializer = DecksSerializer(queryset, many=True)
         return Response(serializer.data)
+
+class CardsView(viewsets.ModelViewSet):
+    serializer_class = CardsSerializer
+    queryset = Cards.objects.all()
+    
+    def list(self, request):
+        queryset = Cards.objects.filter(user=request.user.id)
+        serializer = CardsSerializer(queryset, many=True)
+        return Response(serializer.data)
     
 
 
