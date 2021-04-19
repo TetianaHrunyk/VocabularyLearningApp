@@ -1,19 +1,23 @@
 import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
-import UserContext from "../contexts/UserContext"
-
+//import UserContext from "../contexts/UserContext"
 
 
 const Left = (props) => {
-  const { text, parsed, handleParse, handleText , queue, handleWordClick, back, handleBack} = props
+ // const { text, parsed, handleParse, handleText , queue, handleWordClick, back, handleBack} = props
+ const { text, parsed, handleParse, handleText , handleWordClick, handleBack} = props
 
   function parseText(text) {
     return (
       text.split(" ")
       .filter( elem => elem !== " ")
+      .map(elem => elem.toLowerCase().replace(/[^\w\s]|_/g, ""))
       .map(elem => {
         return (
-            <button value = {elem} onClick={handleWordClick} key={elem}>
+            <button value = {elem} 
+              onClick={handleWordClick} 
+              key={elem+Math.floor(Math.random() * 1000)}
+            >
               {elem}
             </button>
         )

@@ -23,13 +23,13 @@ const Decks = () => {
   const { username: user } = useContext(UserContext);
 
   if (data) localStorage.setItem("decks", data);
-  
+  /*
   useEffect(() => {
     return () => {
       setDeleted(false);
       setCreated(false);
     };
-  });
+  });*/
 
   const handleCreateNewDeck = (e, data) => {
     e.preventDefault();
@@ -66,11 +66,45 @@ const Decks = () => {
         console.error("Error:", error);
       });
     setNewDeckName("");
-    setCreated(false);
+    setCreated(!created);
   };
 
   const handleEdit = (e) => {
     console.log("edit");
+    fetch(django_host + "api/decks/"+e.target.value, {
+      method: "PUT",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCreated(true);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    fetch(django_host + "api/decks/", {
+      method: "GET",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const decksIds = data.map((elem) => elem.id);
+        const decksNames = data.map((elem) => elem.deckName);
+        localStorage.setItem("decksIds", decksIds);
+        localStorage.setItem("decksNames", decksNames);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    setNewDeckName("");
+    setCreated(!created);
   };
 
   const handleDelete = (e) => {
@@ -82,7 +116,9 @@ const Decks = () => {
       },
       body: JSON.stringify({}),
     })
-      .then(() => setDeleted(true))
+      .then(
+        () => setDeleted(true)
+      )
       .catch((e) => {
         console.log("Error: ", e.message);
         setApiError(e.message);
@@ -104,7 +140,7 @@ const Decks = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    setDeleted(false);
+    setDeleted(!deleted);
   };
 
   function makeDeck(data) {

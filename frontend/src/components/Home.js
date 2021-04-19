@@ -1,14 +1,29 @@
-import { useState, useContext, useEffect, useMemo } from "react";
+import { useState, useEffect, useContext} from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Left from "./Left";
 import Right from "./Right";
+import django_host from "./paths"
 //import useTranslate from "../hooks/useTranslate"
-//import UserContext from "../contexts/UserContext"
+import UserContext from "../contexts/UserContext"
+
+const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
+const decksNames = localStorage.getItem("decksNames").split(",");
+const decksIds = localStorage.getItem("decksIds").split(",");
+const zipped = zip(decksIds, decksNames);
+
+const keys = ["front", "back", "user", "deck"]
+
+function toObject(arr, keys) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    rv[keys[i]] = arr[i];
+  return rv;
+}
+
 
 const Home = () => {
-  //Destructure context
-  //    const { user } = useContext(UserContext)
+  const { username: user } = useContext(UserContext);
 
   const history = useHistory();
   const [parsed, setParse] = useState(false);
@@ -16,6 +31,7 @@ const Home = () => {
   const [queue, setQueue] = useState({});
   const [add, setAdd] = useState({});
   const [back, setBack] = useState(false);
+  const [deck, setDeck] = useState(null);
   const [sourceLan, setSourceLan] = useState("en");
   const [targetLan, setTargetLan] = useState("sk");
 
@@ -40,6 +56,33 @@ const Home = () => {
   const handleBack = (e) => {
     setBack(true);
     setParse(false);
+  };
+
+  const handlePostCards = (e) => {
+    e.preventDefault()
+    const postData = Object.keys(add).map(key => 
+      toObject([key, add[key], user, deck], keys)
+    )
+    postData.forEach(element => {
+      fetch(django_host + "api/cards/", {
+        method: "POST",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(element),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    });
+    setDeck(null);
   };
 
   const handleWordClick = (e) => {
@@ -79,6 +122,16 @@ const Home = () => {
     }
   };
 
+  function makeSelectDeck(defDeck) {
+    return zipped.map((deck) => {
+      return (
+        <option value={deck[0]} key={deck[0]}>
+          {deck[1]}
+        </option>
+      );
+    });
+  }
+
   const handleAdd = (e) => {
     if (e.target.value in add) {
       const { [e.target.value]: tmp, ...rest } = add;
@@ -87,6 +140,17 @@ const Home = () => {
       setAdd({ ...add, [e.target.value]: queue[[e.target.value]] });
     }
   };
+/*
+  if (Object.keys(add).length !== 0) {
+    const postData = Object.keys(add).map(key => 
+      toObject([key, add[key], user, deck], keys)
+    )
+    console.log(JSON.stringify(postData))
+  } else {
+    console.log("empty")
+  }
+ */
+   
 
   return (
     <div className="home">
@@ -141,15 +205,36 @@ const Home = () => {
             />
           </Col>
         </Row>
-        {
-            add.length ? 
-            <Row>
-                <button>Add Cards to </button>
-            </Row>
-            :
-            <div></div>
-        }
-        
+        {Object.keys(add).length !== 0 ? (
+          <Row>
+            <Col>
+              Add Cards to
+              <select
+                name="deck"
+                onChange={(e) => setDeck(e.target.value)}
+                defaultValue={deck ? deck : "-------"}
+              >
+                {!deck ? (
+                  <option key="dummy" value="dummy">
+                    --------
+                  </option>
+                ) : (
+                  ""
+                )}
+                {makeSelectDeck(deck)}
+              </select>
+            </Col>
+            <Col>
+              {!deck ? (
+                <h5>Please, select deck to add the cards</h5>
+              ) : (
+                <button onClick={(e) => handlePostCards(e)}>Add cards</button>
+              )}
+            </Col>
+          </Row>
+        ) : (
+          <div></div>
+        )}
       </Container>
     </div>
   );

@@ -99,7 +99,6 @@ const Cards = () => {
   };
 
   const handleDeck = (e) => {
-
     setDeck(e.target.value);
   };
 
