@@ -163,6 +163,7 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=15),
 }
 
+#add from here on
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
