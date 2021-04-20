@@ -7,6 +7,7 @@ import Alert from "react-bootstrap/Alert";
 import UserContext from "../contexts/UserContext.js";
 import useGetData from "../hooks/useGetData";
 import {Link} from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Decks = () => {
   const [deleted, setDeleted] = useState(false);

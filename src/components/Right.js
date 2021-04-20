@@ -2,6 +2,7 @@ import { useContext } from "react"
 import Card from "react-bootstrap/Card"
 import CardDeck from 'react-bootstrap/CardDeck'
 import UserContext from "../contexts/UserContext"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Right = ({parsed, queue, handleAdd, add }) => {
   const { user } = useContext(UserContext)

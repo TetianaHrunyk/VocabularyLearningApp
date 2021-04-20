@@ -8,6 +8,7 @@ import UserContext from "../contexts/UserContext.js";
 import useGetData from "../hooks/useGetData";
 import { Row, Col } from "react-bootstrap";
 import {useLocation} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 const decksNames = localStorage.getItem("decksNames").split(",");

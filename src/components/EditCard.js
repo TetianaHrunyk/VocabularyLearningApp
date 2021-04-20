@@ -1,6 +1,7 @@
 import ContentEditable from 'react-contenteditable'
 import { useRef } from "react"
 import Card from "react-bootstrap/Card"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const EditCard = () => {
   const title = useRef("Some title");

@@ -6,6 +6,7 @@ import Right from "./Right";
 import django_host from "./paths"
 //import useTranslate from "../hooks/useTranslate"
 import UserContext from "../contexts/UserContext"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 const decksNames = localStorage.getItem("decksNames").split(",");

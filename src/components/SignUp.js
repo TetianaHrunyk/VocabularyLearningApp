@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import {useHistory} from "react-router-dom"
 import Button from 'react-bootstrap/Button'
 import Alert from "react-bootstrap/Alert"
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const SignUp = ({handleSignUp, error, setError}) => {
     const [username, setUsername] = useState('');
