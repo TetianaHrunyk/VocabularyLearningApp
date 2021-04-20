@@ -9,10 +9,12 @@ import UserContext from "../contexts/UserContext"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
-const decksNames = localStorage.getItem("decksNames").split(",");
-const decksIds = localStorage.getItem("decksIds").split(",");
-const zipped = zip(decksIds, decksNames);
 
+
+const decksNames = localStorage.getItem("decksNames").split(",") || [];
+const decksIds = localStorage.getItem("decksIds").split(",") || [];
+
+const zipped = zip(decksIds, decksNames); 
 const keys = ["front", "back", "user", "deck"]
 
 function toObject(arr, keys) {
@@ -124,13 +126,15 @@ const Home = () => {
   };
 
   function makeSelectDeck(defDeck) {
-    return zipped.map((deck) => {
-      return (
-        <option value={deck[0]} key={deck[0]}>
-          {deck[1]}
-        </option>
-      );
-    });
+    if (zipped !== undefined) {
+      return zipped.map((deck) => {
+        return (
+          <option value={deck[0]} key={deck[0]}>
+            {deck[1]}
+          </option>
+        );
+      });
+    }
   }
 
   const handleAdd = (e) => {
