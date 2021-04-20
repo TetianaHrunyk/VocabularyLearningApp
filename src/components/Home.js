@@ -11,8 +11,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
 
-const decksNames = localStorage.getItem("decksNames").split(",") || [];
-const decksIds = localStorage.getItem("decksIds").split(",") || [];
+const decksNamesArray = localStorage.getItem("decksNames") || '';
+const decksIdsArray = localStorage.getItem("decksIds") || '';
+
+const decksNames = decksNamesArray.split(",")
+const decksIds = decksIdsArray.split(",")
 
 const zipped = zip(decksIds, decksNames); 
 const keys = ["front", "back", "user", "deck"]
