@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
 if (!("decksNames" in localStorage)){
-  localStorage.setItem("deckNames", "")
+  localStorage.setItem("decksNames", "")
   localStorage.setItem("decksIds", "")
 }
 
