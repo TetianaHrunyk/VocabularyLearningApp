@@ -23,7 +23,6 @@ const Decks = () => {
   const [apiError, setApiError] = useState("");
   const { username: user } = useContext(UserContext);
 
-  if (data) localStorage.setItem("decks", data);
   /*
   useEffect(() => {
     return () => {

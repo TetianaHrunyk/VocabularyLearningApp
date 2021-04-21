@@ -1,33 +1,28 @@
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Left from "./Left";
 import Right from "./Right";
-import django_host from "./paths"
+import django_host from "./paths";
 //import useTranslate from "../hooks/useTranslate"
-import UserContext from "../contexts/UserContext"
+import UserContext from "../contexts/UserContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
-if (!("decksNames" in localStorage)){
-  localStorage.setItem("decksNames", "")
-  localStorage.setItem("decksIds", "")
+if (!("decksNames" in localStorage)) {
+  localStorage.setItem("decksNames", "");
+  localStorage.setItem("decksIds", "");
 }
 
-const decksNames = localStorage.getItem("decksNames").split(",")
-const decksIds = localStorage.getItem("decksIds").split(",")
 
-const zipped = zip(decksIds, decksNames); 
-const keys = ["front", "back", "user", "deck"]
+const keys = ["front", "back", "user", "deck"];
 
 function toObject(arr, keys) {
   var rv = {};
-  for (var i = 0; i < arr.length; ++i)
-    rv[keys[i]] = arr[i];
+  for (var i = 0; i < arr.length; ++i) rv[keys[i]] = arr[i];
   return rv;
 }
-
 
 const Home = () => {
   const { username: user } = useContext(UserContext);
@@ -41,6 +36,10 @@ const Home = () => {
   const [deck, setDeck] = useState(null);
   const [sourceLan, setSourceLan] = useState("en");
   const [targetLan, setTargetLan] = useState("sk");
+  
+  const decksNames = localStorage.getItem("decksNames").split(",");
+  const decksIds = localStorage.getItem("decksIds").split(",");
+  const zipped = zip(decksIds, decksNames);
 
   useEffect(() => {
     window.addEventListener("popstate", (e) => {
@@ -66,11 +65,11 @@ const Home = () => {
   };
 
   const handlePostCards = (e) => {
-    e.preventDefault()
-    const postData = Object.keys(add).map(key => 
+    e.preventDefault();
+    const postData = Object.keys(add).map((key) =>
       toObject([key, add[key], user, deck], keys)
-    )
-    postData.forEach(element => {
+    );
+    postData.forEach((element) => {
       fetch(django_host + "api/cards/", {
         method: "POST",
         headers: {
@@ -82,9 +81,7 @@ const Home = () => {
         .then((res) => {
           return res.json();
         })
-        .then((data) => {
-          
-        })
+        .then((data) => {})
         .catch((err) => {
           console.log(err.message);
         });
@@ -97,31 +94,34 @@ const Home = () => {
       const { [e.target.value]: tmp, ...rest } = queue;
       setQueue(rest);
     } else {
-      
-            const source=sourceLan
-            const target=targetLan
-            fetch("https://deep-translate1.p.rapidapi.com/language/translate/v2", {
-                "method": "POST",
-                "headers": {
-                  "content-type": "application/json",
-                  "x-rapidapi-key": "c07e2c5e08mshd3c51cf8cbe266dp1236c9jsn787baf24bd93",
-                  "x-rapidapi-host": "deep-translate1.p.rapidapi.com"
-                },
-                "body": JSON.stringify({
-                  "q": e.target.value,
-                  "source": source,
-                  "target": target
-                })
-              })
-              .then(res => res.json())
-              .then(data => {
-                setQueue({ ...queue, [e.target.value]: data.data.translations.translatedText})
-              })
-              .catch(err => {
-                setQueue({ ...queue, [e.target.value]: "Falied to translate"})
-                console.log(err.message)
-              })
-            
+      const source = sourceLan;
+      const target = targetLan;
+      fetch("https://deep-translate1.p.rapidapi.com/language/translate/v2", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "x-rapidapi-key":
+            "c07e2c5e08mshd3c51cf8cbe266dp1236c9jsn787baf24bd93",
+          "x-rapidapi-host": "deep-translate1.p.rapidapi.com",
+        },
+        body: JSON.stringify({
+          q: e.target.value,
+          source: source,
+          target: target,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setQueue({
+            ...queue,
+            [e.target.value]: data.data.translations.translatedText,
+          });
+        })
+        .catch((err) => {
+          setQueue({ ...queue, [e.target.value]: "Falied to translate" });
+          console.log(err.message);
+        });
+
       /*setQueue({
         ...queue,
         [e.target.value]: "Translation when saving api resources",
@@ -149,7 +149,7 @@ const Home = () => {
       setAdd({ ...add, [e.target.value]: queue[[e.target.value]] });
     }
   };
-/*
+  /*
   if (Object.keys(add).length !== 0) {
     const postData = Object.keys(add).map(key => 
       toObject([key, add[key], user, deck], keys)
@@ -159,7 +159,6 @@ const Home = () => {
     console.log("empty")
   }
  */
-   
 
   return (
     <div className="home">

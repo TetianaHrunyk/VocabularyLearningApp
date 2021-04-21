@@ -11,9 +11,6 @@ import {useLocation} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
-const decksNames = localStorage.getItem("decksNames").split(",");
-const decksIds = localStorage.getItem("decksIds").split(",");
-const zipped = zip(decksIds, decksNames);
 
 const Cards = () => {
   let locationData = useLocation();
@@ -37,6 +34,10 @@ const Cards = () => {
   const { username: user } = useContext(UserContext);
 
   const [sort, setSort] = useState("added");
+
+  const decksNames = localStorage.getItem("decksNames").split(",");
+  const decksIds = localStorage.getItem("decksIds").split(",");
+  const zipped = zip(decksIds, decksNames);
 
   const handleCreateNewCard = (e) => {
     e.preventDefault();
