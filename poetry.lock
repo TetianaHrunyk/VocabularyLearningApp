@@ -49,6 +49,14 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 
 [[package]]
+name = "django-cors-middleware"
+version = "1.5.0"
+description = "django-cors-middleware is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS). Fork of django-cors-headers."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-on-heroku"
 version = "1.1.2"
 description = "This package simplifies running a Django app on Heroku platform."
@@ -157,7 +165,7 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "d8a5c69b073ecc0226411f55e35b4d72f91e805b4e407491a087b8661cffa984"
+content-hash = "90bb848f90a82c532a1f1dc0936fc9ae748fbc345af0c82c0ead007e16da46e3"
 
 [metadata.files]
 asgiref = [
@@ -175,6 +183,10 @@ django = [
 django-cors-headers = [
     {file = "django-cors-headers-3.7.0.tar.gz", hash = "sha256:96069c4aaacace786a34ee7894ff680780ec2644e4268b31181044410fecd12e"},
     {file = "django_cors_headers-3.7.0-py3-none-any.whl", hash = "sha256:1ac2b1213de75a251e2ba04448da15f99bcfcbe164288ae6b5ff929dc49b372f"},
+]
+django-cors-middleware = [
+    {file = "django-cors-middleware-1.5.0.tar.gz", hash = "sha256:856dbe4d7aae65844ccc68acb49c6da7dbf7cbacaf5bcf37019f4c0c60b3be84"},
+    {file = "django_cors_middleware-1.5.0-py3-none-any.whl", hash = "sha256:5bbdea85e22909d596e26f6e0dbc174d5521429fa3943ae02a2c6c48e76c88c7"},
 ]
 django-on-heroku = [
     {file = "django-on-heroku-1.1.2.tar.gz", hash = "sha256:a41fe83ef7ecb022ca92b2950a61f79fef156e58f4f35fc7fc4ecacdc5225fb8"},
