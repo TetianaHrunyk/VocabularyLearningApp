@@ -1,6 +1,0 @@
-django>=2.0.8
-gunicorn==19.9.0
-whitenoise==4.1.2
-djangorestframework==3.12.4
-djangorestframework-jwt>=1.1.1
-django-cors-headers==3.0.7
