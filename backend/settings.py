@@ -141,12 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://localhost:8000/', 
-    'http://localhost:8000/api/users/', 
-    'http://localhost:8000/api/decks/',
-    'http://localhost:8000/api/cards/',
-    'http://localhost:8000/api/current_user/',
-
 ]
 
 REST_FRAMEWORK = {
