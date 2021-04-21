@@ -29,11 +29,7 @@ SECRET_KEY = 'django-insecure-ln36h_3rg^vn)=_+_li2j4jx#%t!3=h0#7eico&-*cn*74ragc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://localhost:8000/', 
-                'http://localhost:8000/api/users/', 
-                'http://localhost:8000/api/decks/',
-                'http://localhost:8000/api/cards/',
-                'http://localhost:8000/api/current_user/'
+ALLOWED_HOSTS = [
                 ]
 
 
@@ -144,7 +140,13 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://localhost:8000/', 
+    'http://localhost:8000/api/users/', 
+    'http://localhost:8000/api/decks/',
+    'http://localhost:8000/api/cards/',
+    'http://localhost:8000/api/current_user/',
+
 ]
 
 REST_FRAMEWORK = {
