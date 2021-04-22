@@ -27,11 +27,11 @@ router.register(r'cards', views.CardsView, 'cards')
 
 urlpatterns = [
     path('', index, name='index'),
-    path('signup', index, name='index'),
-    path('login', index, name='index'),
-    path('cards', index, name='index'),
-    path('decks', index, name='index'),
-    path('study', index, name='index'),
+    path('signup/', index, name='index'),
+    path('login/', index, name='index'),
+    path('cards/', index, name='index'),
+    path('decks/', index, name='index'),
+    path('study/', index, name='index'),
     path('admin/', admin.site.urls),
     path('token-auth/', obtain_jwt_token),
     path('token-auth/refresh/', refresh_jwt_token),
