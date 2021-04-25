@@ -24,6 +24,7 @@ from .views import index
 router = routers.DefaultRouter()
 router.register(r'decks', views.DecksView, 'decks')
 router.register(r'cards', views.CardsView, 'cards')
+router.register(r'study', views.StudyView, 'study')
 
 urlpatterns = [
     path('', index, name='index'),

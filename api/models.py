@@ -14,7 +14,7 @@ class Decks(models.Model):
 class Cards(models.Model):
   deck = models.ForeignKey(Decks, on_delete=models.CASCADE, default=1)
   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-  front = models.CharField(max_length=50, null=False, unique=True)
+  front = models.CharField(max_length=50, null=False)
   back = models.CharField(max_length=50, null=False)
   context = models.CharField(max_length=500, default='')
   added = models.DateTimeField( auto_now_add=True)

@@ -8,7 +8,6 @@ import UserContext from "../contexts/UserContext.js";
 import useGetData from "../hooks/useGetData";
 import { Row, Col } from "react-bootstrap";
 import {useLocation} from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
@@ -17,6 +16,9 @@ const Cards = () => {
   const [deleted, setDeleted] = useState(false);
   const [created, setCreated] = useState(false);
   const [deck, setDeck] = useState( locationData.state?.deckId || null);
+  const [editId, setEditId] = useState('');
+  const [newFront, setNewFront] = useState('');
+  const [newBack, setNewBack] = useState('');
   
   const { data, isPending, error } = useGetData(
                                       django_host + "api/cards/",
@@ -27,7 +29,6 @@ const Cards = () => {
                                       deck
                                     );
   const cards = data || [];
-
   const [newCardName, setNewCardName] = useState("");
   const [back, setBack] = useState("");
   const [apiError, setApiError] = useState("");
@@ -57,15 +58,41 @@ const Cards = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setApiError(e.message);
       });
     setNewCardName("");
     setBack("");
     setCreated(false);
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = (e, oldFront, oldBack) => {
     e.preventDefault();
-    console.log("edit");
+    const intDeck = parseInt(deck);
+    const id = parseInt(editId)
+    const front = newFront || oldFront
+    const back_ = newBack || oldBack
+    const data = {front, back: back_, id, user, deck: intDeck}
+    fetch(django_host + "api/cards/"+editId+'/', {
+      method: "PUT",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCreated(true)
+      })
+      .catch((error) => {
+        setCreated(true)
+        setApiError(e.message);
+        console.error("Error:", error);
+      });
+    setCreated(false)
+    setNewBack('')
+    setNewFront('')
+    setEditId('')  
   };
 
   const handleDelete = (e) => {
@@ -120,25 +147,56 @@ const Cards = () => {
         .sort((a, b) => a[sort] > b[sort])
         .map((card) => {
           return (
-            <Card style={{ minWidth: "30%" }} key={card.id}>
-              <Card.Body>
-                <Card.Title>{card.front}</Card.Title>
-                <Card.Text>
-                  <u>Back:</u> {card.back}
-                  <br />
-                  <u>Added:</u> { parseDate(card.added) }
-                  <br />
-                  <u>Revised:</u> { parseDate(card.revised) }
-                  <br />
-                </Card.Text>
-                <button value={card.id} onClick={(e) => handleEdit(e)}>
-                  Edit
-                </button>
-                <button value={card.id} onClick={(e) => handleDelete(e)}>
-                  Delete
-                </button>
-              </Card.Body>
-            </Card>
+            <form key={card.id}>
+              <Card style={{ minWidth: "30%" }}>
+                <Card.Body>
+                  <Card.Title>{card.front}</Card.Title>
+                  {card.id == editId ? 
+                        <input 
+                          type="text" 
+                          value={newFront} 
+                          onChange={(e) => setNewFront(e.target.value)} 
+                          placeholder="New front"
+                        />     
+                      :
+                      <></>
+                    }
+                  <Card.Text>
+                    <u>Back:</u> {card.back}
+                    <br />
+                    {card.id == editId ? 
+                        <>
+                          <input 
+                            type="text" 
+                            value={newBack} 
+                            onChange={(e) => setNewBack(e.target.value)} 
+                            placeholder="New back"
+                          />
+                          <br />
+                        </>
+                      :
+                      <></>
+                    }
+                    <u>Added:</u> { parseDate(card.added) }
+                    <br />
+                    <u>Revised:</u> { parseDate(card.revised) }
+                    <br />
+                  </Card.Text>
+                  {card.id == editId ?
+                    <button type="submit" value={card.id}  onClick={(e) => handleEdit(e, card.front, card.back)}>
+                      Save Changes
+                    </button>
+                    :
+                    <button value={card.id} onClick={(e) => { e.preventDefault(); setEditId(e.target.value)}}>
+                      Edit
+                    </button>
+                  }
+                  <button value={card.id} onClick={(e) => handleDelete(e)}>
+                    Delete
+                  </button>
+                </Card.Body>
+              </Card>
+            </form>
           );
         });
     }
