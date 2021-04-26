@@ -101,7 +101,13 @@ function App() {
       },
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then(response => {
+        if (response.statusText === "Internal Server Error") {
+           throw new Error(response.statusText)
+        } else {
+          return response.json()
+        }
+      })
       .then((json) => {
         if (json.username[0] === "A user with that username already exists.") {
           throw new Error("A user with that username already exists");

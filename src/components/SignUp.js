@@ -4,9 +4,11 @@ import Button from 'react-bootstrap/Button'
 import Alert from "react-bootstrap/Alert"
 import "bootstrap/dist/css/bootstrap.min.css";
 
-localStorage.clear();
+
 
 const SignUp = ({handleSignUp, error, setError}) => {
+    localStorage.clear();
+    
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
