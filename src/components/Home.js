@@ -10,10 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
-if (!("decksNames" in localStorage)) {
-  localStorage.setItem("decksNames", "");
-  localStorage.setItem("decksIds", "");
-}
+
 
 
 const keys = ["front", "back", "user", "deck"];
@@ -25,6 +22,12 @@ function toObject(arr, keys) {
 }
 
 const Home = () => {
+
+  if (localStorage.length===0) {
+    localStorage.setItem("decksNames", "");
+    localStorage.setItem("decksIds", "");
+  }
+
   const { username: user } = useContext(UserContext);
 
   const history = useHistory();

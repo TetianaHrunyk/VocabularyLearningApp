@@ -62,8 +62,7 @@ function App() {
   }, [loggedIn]);
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("decks");
+    localStorage.clear()
     setUsername("");
     setLoggedIn(false);
     setLogInTime(null);
