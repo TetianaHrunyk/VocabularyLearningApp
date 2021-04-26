@@ -69,6 +69,7 @@ const Decks = () => {
     setCreated(!created);
   };
 
+  //eslint-disable-next-line
   const handleEdit = (e) => {
     console.log("edit");
     fetch(django_host + "api/decks/"+e.target.value, {

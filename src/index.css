@@ -22,6 +22,7 @@
   margin-left: auto;
 }
 .navbar a {
+  color:rgb(168, 5, 67) ;
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
@@ -92,7 +93,7 @@
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(110, 61, 61);
   box-sizing: border-box;
   display: block;
 }
@@ -108,9 +109,9 @@
 button {
   background: #f1356d;
   color: #fff;
-  border: 1;
+  border: 1 !important;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: 8px !important;
   cursor: pointer;
 }
 

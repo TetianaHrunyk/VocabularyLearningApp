@@ -4,7 +4,6 @@ const useFetch = (url, method, authentication, deleted, created, deck) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-  console.log("Use fetch")
   useEffect(() => {
     const abortCont = new AbortController();
       fetch(url, 

@@ -1,8 +1,8 @@
+ /*eslint-disable eqeqeq*/
 import { useState, useEffect, useContext} from "react";
 import Card from "react-bootstrap/Card";
 import django_host from "./paths";
 import UserContext from "../contexts/UserContext.js";
-import useGetData from "../hooks/useGetData";
 import { Row, Col } from "react-bootstrap";
 import {useLocation} from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
@@ -21,6 +21,7 @@ const Study = () => {
   const [indices, setIndices] = useState([]);
   const [apiError, setApiError] = useState("");
   const [hist, setHist] = useState([]);
+  //eslint-disable-next-line
   const { username: user } = useContext(UserContext);
   const [curId, setCurId] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -33,21 +34,30 @@ const Study = () => {
 //  console.log("Indices: ", indices)
   useEffect(() => {
 //    console.log("Fetch data")
-    fetch(django_host + "api/study/", {
+    const d = deck || "0000000000000000000000000"
+    fetch(django_host + "api/study/?deck="+d+"&progress=0.5", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.statusText === "Internal Server Error") {
+          throw new Error('Deck not selected')
+          
+        } else {
+          return response.json()
+        }
+      })
       .then((data) => {
         setData(data);
         setIndices(Object.keys(data));
       })
       .catch((error) => {
         console.error("Error:", error);
-        setApiError(error);
+        error.message !== 'Deck not selected' ?
+        setApiError(error) : setApiError('')
       });
   }, [deck]);
 
@@ -137,7 +147,7 @@ const Study = () => {
                         onClick={(e) => {
                           setIndices(indices.filter(elem => elem !== curId))
                           setHist(hist.filter(elem => elem !== curId))
-                          setCurId(get_random(indices))
+                          indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
                           setShowAnswer(false);
                         }}
                       >
@@ -149,7 +159,7 @@ const Study = () => {
                     onClick={(e) => {
                       setShowAnswer(false);
                       setHist([...hist, curId])
-                      setCurId(get_random(indices))
+                      indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
                     }}
                   >
                     Ask later
@@ -173,7 +183,7 @@ const Study = () => {
                 onClick={(e) => {
                   setShowAnswer(false);
                   setHist([...hist, curId])
-                  setCurId(get_random(indices))
+                  indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
                 }}
               >
                 arrow_forward_ios

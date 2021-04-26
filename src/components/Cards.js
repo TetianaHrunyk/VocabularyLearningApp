@@ -1,3 +1,4 @@
+ /*eslint-disable eqeqeq*/
 import { useState} from "react";
 import { useContext } from "react";
 import Card from "react-bootstrap/Card";
@@ -151,6 +152,7 @@ const Cards = () => {
               <Card style={{ minWidth: "30%" }}>
                 <Card.Body>
                   <Card.Title>{card.front}</Card.Title>
+                  
                   {card.id == editId ? 
                         <input 
                           type="text" 

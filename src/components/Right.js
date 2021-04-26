@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Right = ({parsed, queue, handleAdd, add }) => {
+  //eslint-disable-next-line
   const { user } = useContext(UserContext)
 
   function mapQueue(queue) {

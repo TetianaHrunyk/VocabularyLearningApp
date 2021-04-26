@@ -156,7 +156,6 @@ function App() {
           </div>
         </UserContext.Provider>
 
-        <Footer />
       </div>
     </Router>
   );

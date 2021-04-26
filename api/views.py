@@ -56,12 +56,13 @@ class CardsView(viewsets.ModelViewSet):
     
 class StudyView(viewsets.ModelViewSet):
     serializer_class = CardsSerializer
-    
-    def list(self, request):
-        queryset = Cards.objects.filter(for_nat__lte=0.5)
+    queryset = Cards.objects.all()
+
+    def list(self, request): 
         deck = request.GET.get('deck', None)
+        progress = request.GET.get('progress', 0.5)
         if deck:
-            queryset = Cards.objects.filter(deck=deck)
+            queryset = Cards.objects.filter(deck=deck, for_nat__lte=progress)
         serializer = CardsSerializer(queryset, many=True)
         return Response(serializer.data)
 
