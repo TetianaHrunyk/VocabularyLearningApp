@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import django_host from "./paths";
@@ -10,14 +9,13 @@ import {Link} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Decks = () => {
-  const [deleted, setDeleted] = useState(false);
-  const [created, setCreated] = useState(false);
+  const [updateLocalStorage, setUpdateLocalStorage] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { data, isPending, error } = useGetData(
     django_host + "api/decks/",
     "GET",
     `JWT ${localStorage.getItem("token")}`,
-    deleted,
-    created
+    updateLocalStorage
   );
   const [newDeckName, setNewDeckName] = useState("");
   const [apiError, setApiError] = useState("");
@@ -30,9 +28,31 @@ const Decks = () => {
       setCreated(false);
     };
   });*/
+  useEffect(() => {
+    if (!loading) {
+      fetch(django_host + "api/decks/", {
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const decksIds = data.map((elem) => elem.id);
+          const decksNames = data.map((elem) => elem.deckName);
+          localStorage.setItem("decksIds", decksIds);
+          localStorage.setItem("decksNames", decksNames);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        })
+    }
+  }, [updateLocalStorage]);
 
   const handleCreateNewDeck = (e, data) => {
     e.preventDefault();
+    setLoading(true)
     fetch(django_host + "api/decks/", {
       method: "POST",
       headers: {
@@ -43,30 +63,14 @@ const Decks = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setCreated(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    fetch(django_host + "api/decks/", {
-      method: "GET",
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const decksIds = data.map((elem) => elem.id);
-        const decksNames = data.map((elem) => elem.deckName);
-        localStorage.setItem("decksIds", decksIds);
-        localStorage.setItem("decksNames", decksNames);
+        setUpdateLocalStorage(true)
       })
       .catch((error) => {
         console.error("Error:", error);
       });
     setNewDeckName("");
-    setCreated(!created);
+    setLoading(false)
+    setUpdateLocalStorage(false)
   };
 
   //eslint-disable-next-line
@@ -82,33 +86,17 @@ const Decks = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setCreated(true);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    fetch(django_host + "api/decks/", {
-      method: "GET",
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const decksIds = data.map((elem) => elem.id);
-        const decksNames = data.map((elem) => elem.deckName);
-        localStorage.setItem("decksIds", decksIds);
-        localStorage.setItem("decksNames", decksNames);
+        setUpdateLocalStorage(true)
       })
       .catch((error) => {
         console.error("Error:", error);
       });
     setNewDeckName("");
-    setCreated(!created);
+    setUpdateLocalStorage(false)
   };
 
   const handleDelete = (e) => {
+    setLoading(true)
     fetch(django_host + "api/decks/" + e.target.value, {
       method: "DELETE",
       headers: {
@@ -118,30 +106,14 @@ const Decks = () => {
       body: JSON.stringify({}),
     })
       .then(
-        () => setDeleted(true)
+        () => { setUpdateLocalStorage(true)}
       )
       .catch((e) => {
         console.log("Error: ", e.message);
         setApiError(e.message);
       });
-    fetch(django_host + "api/decks/", {
-      method: "GET",
-      headers: {
-        Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const decksIds = data.map((elem) => elem.id);
-        const decksNames = data.map((elem) => elem.deckName);
-        localStorage.setItem("decksIds", decksIds);
-        localStorage.setItem("decksNames", decksNames);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    setDeleted(!deleted);
+    setLoading(false)
+    setUpdateLocalStorage(false)
   };
 
   function makeDeck(data) {

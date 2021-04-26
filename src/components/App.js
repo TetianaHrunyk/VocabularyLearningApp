@@ -50,6 +50,7 @@ function App() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log("Fetching decks")
           const decksIds = data.map(elem => elem.id)
           const decksNames = data.map(elem => elem.deckName)
           localStorage.setItem("decksIds", decksIds);
@@ -78,7 +79,13 @@ function App() {
       },
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok === true) {
+          return res.json();
+        } else {
+          throw new Error(res.statusText);
+        }
+      })
       .then((json) => {
         localStorage.setItem("token", json.token);
         setLogInTime(Date.now());
@@ -101,17 +108,14 @@ function App() {
       },
       body: JSON.stringify(data),
     })
-      .then(response => {
-        if (response.statusText === "Internal Server Error") {
-           throw new Error(response.statusText)
+      .then(res => {
+        if (res.ok === true) {
+          return res.json();
         } else {
-          return response.json()
+          throw new Error(res.statusText);
         }
       })
       .then((json) => {
-        if (json.username[0] === "A user with that username already exists.") {
-          throw new Error("A user with that username already exists");
-        }
         setLoggedIn(true);
         setUsername(json.id);
         history.push("/login");

@@ -23,7 +23,7 @@ function toObject(arr, keys) {
 
 const Home = () => {
 
-  if (localStorage.length===0) {
+  if (!("decksNames" in localStorage)) {
     localStorage.setItem("decksNames", "");
     localStorage.setItem("decksIds", "");
   }

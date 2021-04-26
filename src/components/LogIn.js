@@ -4,15 +4,13 @@ import Alert from "react-bootstrap/Alert"
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
+localStorage.clear()
 
 const LogIn = ({handleLogIn, error, setError}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory()
 
-    localStorage.clear();
-    
     return ( 
         <div className="form">
             {error !== '' ?
