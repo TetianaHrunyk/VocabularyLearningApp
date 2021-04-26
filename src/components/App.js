@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./Navbbar";
 import Home from "./Home";
-import Footer from "./Footer";
+//import Footer from "./Footer";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import NotFound from "./NotFound";

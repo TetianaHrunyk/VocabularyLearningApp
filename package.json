@@ -2,7 +2,7 @@
   "name": "djrapp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8000/",
+  "proxy": "http://vocsapp.herokuapp.com/",
   "Access-Control-Allow-Origin": "*",
   "dependencies": {
     "@heroku/buildpack-registry": "^1.0.1",
