@@ -28,12 +28,14 @@ const Study = () => {
   const decksNames = localStorage.getItem("decksNames").split(",");
   const decksIds = localStorage.getItem("decksIds").split(",");
   const zipped = zip(decksIds, decksNames);
+  const [loading, setLoading] = useState(false);
 
 //  console.log("CurId: ", curId)
 //  console.log("Hist: ", hist)
 //  console.log("Indices: ", indices)
   useEffect(() => {
 //    console.log("Fetch data")
+    setLoading(true)
     const d = deck || "0000000000000000000000000"
     fetch(django_host + "api/study/?deck="+d+"&progress=0.5", {
       method: "GET",
@@ -53,11 +55,13 @@ const Study = () => {
       .then((data) => {
         setData(data);
         setIndices(Object.keys(data));
+        setLoading(false)
       })
       .catch((error) => {
         console.error("Error:", error);
         error.message !== 'Deck not selected' ?
         setApiError(error) : setApiError('')
+        setLoading(false)
       });
   }, [deck]);
 
@@ -75,12 +79,58 @@ const Study = () => {
     setDeck(e.target.value);
   };
 
+  const handleGotIt = (e) => {
+    const requestData = {
+      "front": data[curId].front,
+      "back": data[curId].back,
+      "for_nat": data[curId].for_nat+0.06,
+       user, deck
+    }
+    fetch(django_host + "api/cards/"+data[curId].id+'/', {
+      method: "PUT",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+    setIndices(indices.filter((elem) => elem !== curId));
+    setHist(hist.filter((elem) => elem !== curId));
+    indices.length > 1
+      ? setCurId(get_random(indices.filter((elem) => elem !== curId)))
+      : setCurId(curId);
+    setShowAnswer(false);
+  };
+
+  const handleAskLater = (e) => {
+    const requestData = {
+      "front": data[curId].front,
+      "back": data[curId].back,
+      "for_nat": data[curId].for_nat-0.05,
+       user, deck
+    }
+    fetch(django_host + "api/cards/"+data[curId].id+'/', {
+      method: "PUT",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+    setShowAnswer(false);
+    setHist([...hist, curId]);
+    indices.length > 1
+      ? setCurId(get_random(indices.filter((elem) => elem !== curId)))
+      : setCurId(curId);
+  };
+
   return (
     <div>
       <h2>
         {deck
           ? "Study cards in " + zipped.filter((elem) => elem[0] == deck)[0][1]
-          : "Select deck"}
+          : "Select deck"
+        }
       </h2>
       {apiError !== "" ? <Alert variant="danger"> {apiError} </Alert> : ""}
       <br />
@@ -114,13 +164,15 @@ const Study = () => {
             {hist.length ? (
               <span
                 className="material-icons"
-                style = {{WebkitUserSelect: "none",  
-                          MozUserSelect: "none",
-                          cursor: "pointer"
-                        }}
+                style={{
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  cursor: "pointer",
+                }}
                 onClick={(e) => {
                   setShowAnswer(false);
-                  setCurId(hist[hist.length-1])
+                  setCurId(hist[hist.length - 1]);
+                  setHist(hist.slice(0, hist.length-1))
                 }}
               >
                 arrow_back_ios
@@ -136,7 +188,11 @@ const Study = () => {
                 <Card.Title>{data[curId].front}</Card.Title>
                 <Card.Text>
                   {!showAnswer ? (
-                    <button onClick={(e) => {setShowAnswer(true); }}>
+                    <button
+                      onClick={(e) => {
+                        setShowAnswer(true);
+                      }}
+                    >
                       Show answer
                     </button>
                   ) : (
@@ -144,26 +200,17 @@ const Study = () => {
                       Answer: <strong>{data[curId].back}</strong>
                       <br />
                       <button
-                        onClick={(e) => {
-                          setIndices(indices.filter(elem => elem !== curId))
-                          setHist(hist.filter(elem => elem !== curId))
-                          indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
-                          setShowAnswer(false);
-                        }}
+                        onClick={(e) => handleGotIt(e)}
                       >
                         Got it
                       </button>
+                      <button
+                        onClick={(e) => handleAskLater(e)}
+                      >
+                        Ask later
+                      </button>
                     </>
                   )}
-                  <button
-                    onClick={(e) => {
-                      setShowAnswer(false);
-                      setHist([...hist, curId])
-                      indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
-                    }}
-                  >
-                    Ask later
-                  </button>
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -176,14 +223,19 @@ const Study = () => {
             {indices.length ? (
               <span
                 className="material-icons"
-                style = {{WebkitUserSelect: "none",  
-                          MozUserSelect: "none",
-                          cursor: "pointer"
-                        }}
+                style={{
+                  WebkitUserSelect: "none",
+                  MozUserSelect: "none",
+                  cursor: "pointer",
+                }}
                 onClick={(e) => {
                   setShowAnswer(false);
-                  setHist([...hist, curId])
-                  indices.length > 1 ? setCurId(get_random(indices.filter(elem=>elem!==curId))) : setCurId(curId)
+                  setHist([...hist, curId]);
+                  indices.length > 1
+                    ? setCurId(
+                        get_random(indices.filter((elem) => elem !== curId))
+                      )
+                    : setCurId(curId);
                 }}
               >
                 arrow_forward_ios
@@ -194,6 +246,8 @@ const Study = () => {
           </Col>
         </Row>
       ) : (
+        loading ? <h4><br />Loading...</h4>
+        :
         <Alert variant="success">
           Great job! No cards to study in this deck. Try another one.
         </Alert>

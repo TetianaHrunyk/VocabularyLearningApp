@@ -50,7 +50,6 @@ function App() {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Fetching decks")
           const decksIds = data.map(elem => elem.id)
           const decksNames = data.map(elem => elem.deckName)
           localStorage.setItem("decksIds", decksIds);

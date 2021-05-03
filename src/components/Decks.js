@@ -48,6 +48,7 @@ const Decks = () => {
           console.error("Error:", error);
         })
     }
+  //eslint-disable-next-line
   }, [updateLocalStorage]);
 
   const handleCreateNewDeck = (e, data) => {

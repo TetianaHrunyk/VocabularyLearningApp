@@ -4,8 +4,6 @@ import Button from 'react-bootstrap/Button'
 import Alert from "react-bootstrap/Alert"
 import "bootstrap/dist/css/bootstrap.min.css";
 
-localStorage.clear()
-
 const SignUp = ({handleSignUp, error, setError}) => {
   
     const [username, setUsername] = useState('');
