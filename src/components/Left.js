@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import styled from '@emotion/styled';
 import Card from "react-bootstrap/Card"
 import Form from "react-bootstrap/Form"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,6 +8,14 @@ import { Droppable, Draggable, DragDropContext} from "react-beautiful-dnd"
 //import UserContext from "../contexts/UserContext"
 
 const grid = 8;
+
+const ScrollContainer = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 250px;
+`;
+
+const scrollContainerStyle = Object
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
@@ -93,6 +102,7 @@ const Left = (props) => {
               onDragEnd={onDragEnd}
               isCombineEnabled={true}
             >
+              <ScrollContainer style={{scrollContainerStyle}}>
               <Droppable droppableId="droppable" isCombineEnabled>
                 {(provided, snapshot) => (
                   <div
@@ -126,6 +136,7 @@ const Left = (props) => {
                   </div>
                 )}
               </Droppable>
+              </ScrollContainer>
             </DragDropContext>
           <button onClick={handleBack}>Back</button>
         </Card.Body>
