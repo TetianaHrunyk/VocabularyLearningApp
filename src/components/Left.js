@@ -7,13 +7,18 @@ import { Droppable, Draggable, DragDropContext} from "react-beautiful-dnd"
 
 //import UserContext from "../contexts/UserContext"
 
-const grid = 8;
+const grid = 6;
 
 const ScrollContainer = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 250px;
+  max-height: 400px;
 `;
+const buttonStyle = {
+  border: "0",
+  padding: "1px",
+  fontSize: "14px"
+}
 
 const scrollContainerStyle = Object
 
@@ -24,16 +29,16 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: `0 0 ${grid}px 0`,
 
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "#66b3ff" : "#ffccff",
 
   // styles we need to apply on draggables
   ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
+  background: isDraggingOver ? "lightblue" : "#ffe6ff",
   padding: grid,
-  width: 250
+  width: "100%"
 });
 
 
@@ -88,7 +93,7 @@ const Left = (props) => {
             onChange={handleText}
           />
           
-          <button type='submit' onClick={handleParse}>Parse</button>
+          <button type='submit' onClick={handleParse} >Parse</button>
         </Card.Body>
       </Card>
     );
@@ -125,8 +130,8 @@ const Left = (props) => {
                                       )}
                             >
                               {elem.val}
-                              <br />
-                              <button value={elem.val} onClick={handleWordClick} >Translate</button>
+                              <br /><br />
+                              <button value={elem.val} onClick={handleWordClick} style ={buttonStyle}>Translate</button>
                             </div>
                           )} 
                         </Draggable>
