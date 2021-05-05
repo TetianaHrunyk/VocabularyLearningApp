@@ -7,13 +7,16 @@ import django_host from "./paths";
 //import useTranslate from "../hooks/useTranslate"
 import UserContext from "../contexts/UserContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Alert from "react-bootstrap/Alert";
 
 const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
-
-
-
 const keys = ["front", "back", "user", "deck"];
+
+/*const languages = ["English", "German", "French", "Spanish", 
+                  "Russian", "Slovak", "Polish", "Ukrainian", 
+                  "Czech", "Portugeese", 
+                ]*/
 
 function toObject(arr, keys) {
   var rv = {};
@@ -39,6 +42,7 @@ const Home = () => {
   const [deck, setDeck] = useState(null);
   const [sourceLan, setSourceLan] = useState("en");
   const [targetLan, setTargetLan] = useState("sk");
+  const [success, setSuccess] = useState(false);
   
   const decksNames = localStorage.getItem("decksNames").split(",");
   const decksIds = localStorage.getItem("decksIds").split(",");
@@ -89,7 +93,18 @@ const Home = () => {
           console.log(err.message);
         });
     });
-    setDeck(null);
+    setSuccess(true)
+    setTimeout(function () {
+      setDeck(null);
+      setParse(false);
+      setText("");
+      setQueue({});
+      setAdd({});
+      setDeck(null);
+      setSuccess(false)
+    }, 2000);
+    
+    
   };
 
   const handleWordClick = (e) => {
@@ -165,9 +180,27 @@ const Home = () => {
 
   return (
     <div className="home">
-      <h2>Home</h2>
-      <br />
+      
       <Container>
+        <Row style={{ justifyContent: "center", textAlign: "center"}} >
+          <h2 >Welcome to vocs!</h2>
+          {!user ? 
+          <div>
+          <p >
+            To start using the app, enter your text on the left. 
+            Don't forget to select your target and source languages. 
+            Click <strong>Parse</strong> to have your text parsed. Then
+            Select the words you are interested in. Click <strong>Translate </strong> 
+            to see the translation on the right.
+          </p>
+          <p>
+            Registered users can save their card and revise them later.
+          </p>
+          </div>
+          : <p></p>
+          }
+        </Row>
+        <br /><br />
         <Row>
           <Col>
             <label>Source Language:</label>
@@ -239,6 +272,11 @@ const Home = () => {
               {!deck ? (
                 <h5>Please, select deck to add the cards</h5>
               ) : (
+                success ?
+                <Alert variant="success">
+                  Cards have been successfully added!
+                </Alert>
+                :
                 <button onClick={(e) => handlePostCards(e)}>Add cards</button>
               )}
             </Col>
