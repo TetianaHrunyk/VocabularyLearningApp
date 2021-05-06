@@ -183,7 +183,7 @@ const Home = () => {
       
       <Container>
         <Row style={{ justifyContent: "center", textAlign: "center"}} >
-          <h2 >Welcome to vocs!</h2>
+          <h2 >Welcome to Vocs!</h2>
           {!user ? 
           <div>
           <p >
