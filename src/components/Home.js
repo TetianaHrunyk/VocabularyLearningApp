@@ -13,10 +13,20 @@ const zip = (a1, a2) => a1.map((x, i) => [x, a2[i]]);
 
 const keys = ["front", "back", "user", "deck"];
 
-/*const languages = ["English", "German", "French", "Spanish", 
+const languages = ["English", "German", "French", "Spanish", 
                   "Russian", "Slovak", "Polish", "Ukrainian", 
-                  "Czech", "Portugeese", 
-                ]*/
+                  "Czech", "Croatian", "Dutch", "Chinese (simplified)", "Greek", 
+                  "Hebrew" , "Hungarian", "Italian", "Romanian", "Sweedish", "Turkish"
+                ]
+
+const languageCodes = ["en", "de", "fr", "es", "ru", "sk", "pl", 
+                      "uk", "cs", "hr", "nl", "zh-CN", "el", "iw", "hu",
+                      "it", "ro", "sv", "tr"
+                    ]
+
+const languageOptions = languages.map((lan, index) => (
+  <option value={languageCodes[index]}>{lan}</option>
+));
 
 function toObject(arr, keys) {
   var rv = {};
@@ -208,10 +218,7 @@ const Home = () => {
               onChange={(e) => setSourceLan(e.target.value)}
               defaultValue="en"
             >
-              <option value="en">English</option>
-              <option value="de">German</option>
-              <option value="ru">Russian</option>
-              <option value="sk">Slovak</option>
+              {languageOptions}
             </select>
           </Col>
           <Col>
@@ -220,10 +227,7 @@ const Home = () => {
               onChange={(e) => setTargetLan(e.target.value)}
               defaultValue="sk"
             >
-              <option value="en">English</option>
-              <option value="de">German</option>
-              <option value="ru">Russian</option>
-              <option value="sk">Slovak</option>
+              {languageOptions}
             </select>
           </Col>
         </Row>
