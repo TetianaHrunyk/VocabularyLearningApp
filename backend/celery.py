@@ -11,6 +11,8 @@ app = Celery('backend')
 # - namespace='CELERY' means all celery-related configuration keys
 #   should have a `CELERY_` prefix.
 app.config_from_object('django.conf:settings', namespace='CELERY')
+CELERY_BROKER_URL = 'redis://localhost:6379'
+
 
 # Load task modules from all registered Django apps.
 app.autodiscover_tasks()

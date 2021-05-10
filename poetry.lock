@@ -139,7 +139,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.2"
+version = "3.2.2"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -363,8 +363,27 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "redis"
+version = "3.5.3"
+description = "Python client for Redis key-value store"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+
+[package.extras]
+hiredis = ["hiredis (>=0.1.3)"]
+
+[[package]]
+name = "redis-server"
+version = "6.0.9"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3,<4"
+
+[[package]]
 name = "six"
-version = "1.15.0"
+version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
 category = "main"
 optional = false
@@ -380,7 +399,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "typing-extensions"
-version = "3.7.4.3"
+version = "3.10.0.0"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "main"
 optional = false
@@ -428,7 +447,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "b4807b18383ec59ffd60eed102d3948c0526855281c94f14730f00e989f347f4"
+content-hash = "0f762262f965bd4b8ea2f10597fe59cb271395a00be23fab2aff45c143c61429"
 
 [metadata.files]
 amqp = [
@@ -467,8 +486,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
-    {file = "Django-3.2-py3-none-any.whl", hash = "sha256:0604e84c4fb698a5e53e5857b5aea945b2f19a18f25f10b8748dbdf935788927"},
-    {file = "Django-3.2.tar.gz", hash = "sha256:21f0f9643722675976004eb683c55d33c05486f94506672df3d6a141546f389d"},
+    {file = "Django-3.2.2-py3-none-any.whl", hash = "sha256:18dd3145ddbd04bf189ff79b9954d08fda5171ea7b57bf705789fea766a07d50"},
+    {file = "Django-3.2.2.tar.gz", hash = "sha256:0a1d195ad65c52bf275b8277b3d49680bd1137a5f55039a806f25f6b9752ce3d"},
 ]
 django-celery-beat = [
     {file = "django-celery-beat-2.2.0.tar.gz", hash = "sha256:b8a13afb15e7c53fc04f4f847ac71a6d32088959aba701eb7c4a59f0c28ba543"},
@@ -565,18 +584,33 @@ pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
     {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
 ]
+redis = [
+    {file = "redis-3.5.3-py2.py3-none-any.whl", hash = "sha256:432b788c4530cfe16d8d943a09d40ca6c16149727e4afe8c2c9d5580c59d9f24"},
+    {file = "redis-3.5.3.tar.gz", hash = "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2"},
+]
+redis-server = [
+    {file = "redis_server-6.0.9-202010301343-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:34588b8c7a3868f5b554355833d52ac4b518c1ec741351744e6b972eee60a4d4"},
+    {file = "redis_server-6.0.9-202010301343-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:2a3b82375fc8714290fdfce79b05a8828bff19b327195bc20b69c5da5e0bdafb"},
+    {file = "redis_server-6.0.9-202010301343-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:0893d5eed4f68d0d1fae6fbde5cbe537bb98ef6d96e96295e870548276bdf85a"},
+    {file = "redis_server-6.0.9-202010301343-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:9a9d52c3f3e3b3378392c88dd1bbc44a3f230e2d0823df59197a0f8556e36484"},
+    {file = "redis_server-6.0.9-202010301343-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:81db448b37ed92092802f8e5a7409dff3ae24b70c9c7885ea99c5871606b1b71"},
+    {file = "redis_server-6.0.9-202010301343-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:5ce3ad812ceb78726e340789d646a2523fd95da2dbe5bd2c660045160bf8aaad"},
+    {file = "redis_server-6.0.9-202010301343-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:92aec8f3938645b51fcea6818932bb1a8d52804e1520fe0d9c8871de890b2831"},
+    {file = "redis_server-6.0.9-202010301344-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:b174f120284617f6e342225ab5665793fa0e4bf7e4c84bf74f4c556dc84eacaa"},
+    {file = "redis_server-6.0.9-202010301346-py3-none-macosx_10_15_x86_64.whl", hash = "sha256:eb6ae7eb052b81e0249011761d20f599c721e0daf47e929b321f0720cfd743be"},
+]
 six = [
-    {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
-    {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
 sqlparse = [
     {file = "sqlparse-0.4.1-py3-none-any.whl", hash = "sha256:017cde379adbd6a1f15a61873f43e8274179378e95ef3fede90b5aa64d304ed0"},
     {file = "sqlparse-0.4.1.tar.gz", hash = "sha256:0f91fd2e829c44362cbcfab3e9ae12e22badaa8a29ad5ff599f9ec109f0454e8"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
-    {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
-    {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
+    {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
+    {file = "typing_extensions-3.10.0.0-py3-none-any.whl", hash = "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"},
+    {file = "typing_extensions-3.10.0.0.tar.gz", hash = "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"},
 ]
 vine = [
     {file = "vine-5.0.0-py2.py3-none-any.whl", hash = "sha256:4c9dceab6f76ed92105027c49c823800dd33cacce13bdedc5b914e3514b7fb30"},
