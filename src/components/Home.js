@@ -88,6 +88,7 @@ const Home = () => {
   const handleBack = (e) => {
     setBack(true);
     setParse(false);
+    setAdd({})
   };
 
   const handlePostCards = (e) => {

@@ -69,6 +69,7 @@ function App() {
   };
 
   const handleLogIn = (e, data, history) => {
+    localStorage.clear()
     setError("");
     e.preventDefault();
     fetch(django_host + "token-auth/", {
@@ -98,6 +99,7 @@ function App() {
   };
 
   const handleSignUp = (e, data, history) => {
+    localStorage.clear()
     e.preventDefault();
     setError("");
     fetch(django_host + "api/users/", {
