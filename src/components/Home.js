@@ -101,7 +101,7 @@ const Home = () => {
         method: "POST",
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+          "Content-Type": 'application/json; charset="utf-8"',
         },
         body: JSON.stringify(element),
       })
@@ -137,7 +137,7 @@ const Home = () => {
       fetch("https://deep-translate1.p.rapidapi.com/language/translate/v2", {
         method: "POST",
         headers: {
-          "content-type": "application/json",
+          "content-type": 'application/json; charset="utf-8"',
           "x-rapidapi-key":
             "c07e2c5e08mshd3c51cf8cbe266dp1236c9jsn787baf24bd93",
           "x-rapidapi-host": "deep-translate1.p.rapidapi.com",

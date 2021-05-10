@@ -45,7 +45,7 @@ function App() {
         method: "GET",
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+          "Content-Type": 'application/json; charset="utf-8"',
         },
       })
         .then((response) => response.json())
@@ -75,7 +75,7 @@ function App() {
     fetch(django_host + "token-auth/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })
@@ -105,7 +105,7 @@ function App() {
     fetch(django_host + "api/users/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })

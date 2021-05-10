@@ -34,7 +34,7 @@ const Decks = () => {
         method: "GET",
         headers: {
           Authorization: `JWT ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+          "Content-Type": 'application/json; charset="utf-8"',
         },
       })
         .then((response) => response.json())
@@ -58,7 +58,7 @@ const Decks = () => {
       method: "POST",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })
@@ -81,7 +81,7 @@ const Decks = () => {
       method: "PUT",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })
@@ -102,7 +102,7 @@ const Decks = () => {
       method: "DELETE",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify({}),
     })

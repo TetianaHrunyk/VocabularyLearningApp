@@ -49,7 +49,7 @@ const Cards = () => {
       method: "POST",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })
@@ -77,7 +77,7 @@ const Cards = () => {
       method: "PUT",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify(data),
     })
@@ -102,7 +102,7 @@ const Cards = () => {
       method: "DELETE",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
+        "Content-Type": 'application/json; charset="utf-8"',
       },
       body: JSON.stringify({}),
     })
