@@ -50,7 +50,10 @@ const Left = (props) => {
   useEffect(() => {
     var counter = 0
     setWords(text.split(" ").filter( elem => elem !== " ")
-                  .map(elem => elem.toLowerCase().replace(/[^\w\s]|_/g, ""))
+                  .map(elem => elem.replace(/[\d]|_/g, ""))
+                  .map(elem => elem.toLowerCase().replace(/[\s{2,}]|_/g, " "))
+                  .filter(elem => elem !== " ")
+                  .filter(elem => elem !== "")
                   .map(elem => {counter++; return {val: elem, id: counter}})
             )
   }, [text]);
