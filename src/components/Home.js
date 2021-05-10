@@ -66,6 +66,15 @@ const Home = () => {
     });
   });
 
+  useEffect(() => {
+    setParse(false)
+    setText("")
+    setQueue({})
+    setAdd({})
+    setDeck(null)
+    setSuccess(false)
+  }, [user]);
+
   const handleParse = (e) => {
     setBack(false);
     setParse(true);

@@ -249,7 +249,7 @@ const Cards = () => {
       {isPending && <div>Loading...</div>}
       {data && (
         <div>
-          <Row>
+          <Row >
             <Col>
               <h5>Deck: </h5>
               <select
